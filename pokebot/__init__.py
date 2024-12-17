@@ -71,8 +71,3 @@ class PokeBot(commands.Bot):
                 self.load_extension(f"cogs.{filename[:-3]}")
 
         self.start(token)
-
-
-def get_settings():
-    with open(os.path.dirname(__file__) + 'settings.yaml', 'r') as json_file:
-        return yaml.load(json_file, Loader=yaml.FullLoader)

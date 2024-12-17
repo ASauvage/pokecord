@@ -1,0 +1,10 @@
+{
+    "help": {
+        "title": "help command_name",
+        "description": "Show this list"
+    },
+    "version": {
+        "title": "version",
+        "description": "Show information about {}"
+    }
+}

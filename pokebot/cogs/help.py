@@ -3,7 +3,7 @@ import enum
 import discord
 import logging
 from discord.ext import commands
-from .. import PokeBot
+from .. import PokeBot, VERSION
 from ..common import get_commands_list
 
 
@@ -19,7 +19,7 @@ class Help(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        logging.info("cogs/help loaded")
+        logging.info(f'cogs/{__name__} loaded')
 
     @commands.hybrid_command(name="help", with_app_command=True, description="A help command for commands")
     @discord.app_commands.describe(command="(optional) The command name")
@@ -41,9 +41,9 @@ class Help(commands.Cog):
                             ),
                             inline=False)
         else:
-            for command_name in self.help_commands:
-                embed.add_field(name=command_name,
-                                value=self.help_commands[command_name]["description"],
+            for name, value in self.help_commands.items():
+                embed.add_field(name=name,
+                                value=value["description"],
                                 inline=False)
 
         await ctx.reply(embed=embed, ephemeral=True)
@@ -56,12 +56,12 @@ class Help(commands.Cog):
         except FileNotFoundError:
             content = "No changelog found"
 
-        embed = discord.Embed(title="UtileBot", description=f"V{self.bot.settings['version']}", color=0x221188)
+        embed = discord.Embed(title="UtileBot", description=f"V{VERSION}", color=0x221188)
         embed.set_thumbnail(url=self.bot.user.avatar)
         embed.set_footer(text=f"https://github.com/ASauvage")
 
-        embed.add_field(name="A utility bot for all your unnecessary needs",
-                        value=f"Developed with Python 3 by {self.bot.developper.mention}",
+        embed.add_field(name="Gotta catch them all!!",
+                        value=f"Developed with Python by {self.bot.developper.mention}",
                         inline=False)
         embed.add_field(name="Changelogs:",
                         value=content)

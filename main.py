@@ -17,6 +17,6 @@ if __name__ == '__main__':
 
     match args.command:
         case 'run':
-            asyncio.run(PokeBot().run_pokebot())
+            asyncio.run(PokeBot().startbot())
         case _:
             ap.print_usage()

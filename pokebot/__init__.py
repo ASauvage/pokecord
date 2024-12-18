@@ -15,9 +15,9 @@ VERSION = '.'.join((str(MAJOR_VERSION), str(MINOR_VERSION), str(PATCH_VERSION)))
 class PokeBot(commands.Bot):
     def __init__(self):
         # Variable
-        with open(os.path.dirname(__file__) + 'settings.yaml', 'r') as json_file:
-            self.settings = yaml.load(json_file, Loader=yaml.FullLoader)
         self.path = os.path.dirname(__file__) + "/"
+        with open(self.path + 'settings.yaml', 'r') as yaml_file:
+            self.settings = yaml.load(yaml_file, Loader=yaml.FullLoader)
         self.developper = None
 
         # Intents

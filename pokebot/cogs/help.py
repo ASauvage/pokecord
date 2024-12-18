@@ -56,7 +56,7 @@ class Help(commands.Cog):
         except FileNotFoundError:
             content = "No changelog found"
 
-        embed = discord.Embed(title="UtileBot", description=f"V{VERSION}", color=0x221188)
+        embed = discord.Embed(title=self.bot.user, description=f"V{VERSION}", color=0x221188)
         embed.set_thumbnail(url=self.bot.user.avatar)
         embed.set_footer(text=f"https://github.com/ASauvage")
 

@@ -5,26 +5,32 @@
             "command: (optional) The command name"
         ],
         "guild_only": false,
-        "extras": ""
+        "extras": null
     },
     "version": {
         "description": "Get informations of the bot",
         "parameters": [],
         "guild_only": false,
-        "extras": ""
+        "extras": null
     },
     "create_my_card": {
         "description": "Create your trainer card and start playing",
         "parameters": [],
         "guild_only": true,
-        "extra": ""
+        "extra": null
     },
     "card": {
-        "description": "Inspect trainer cards",
+        "description": "Inspect trainers card",
         "parameters": [
             "id: (optional) The trainer's ID"
         ],
         "guild_only": true,
         "extras": "default ID is yours"
+    },
+    "bagpack": {
+        "description": "Show what's inside your bag",
+        "parameters": [],
+        "guild_only": true,
+        "extra": null
     }
 }

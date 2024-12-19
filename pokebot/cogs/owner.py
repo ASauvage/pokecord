@@ -26,12 +26,6 @@ class Owner(commands.Cog):
         else:
             raise commands.MissingPermissions(missing_permissions=['owner'])
 
-    @commands.hybrid_command(name="find_user", with_app_command=True, description="Find a person's profile from their id")
-    @discord.app_commands.describe(user="The user id")
-    @commands.has_permissions(administrator=True)
-    async def find_user(self, ctx: commands.Context, user: discord.User):
-        await ctx.reply(user.mention)
-
 
 async def setup(bot: PokeBot):
     await bot.add_cog(Owner(bot))

@@ -21,7 +21,7 @@ class Help(commands.Cog):
     async def on_ready(self):
         logging.info(f'cogs/{__name__} loaded')
 
-    @commands.hybrid_command(name="help", with_app_command=True, description="A help command for commands")
+    @commands.hybrid_command(name="help", with_app_command=True, description=help_commands['help']['description'])
     @discord.app_commands.describe(command="(optional) The command name")
     async def help(self, ctx: commands.Context, command: help_commands_enums = None):
         embed = discord.Embed(title=self.bot.user,
@@ -48,7 +48,7 @@ class Help(commands.Cog):
 
         await ctx.reply(embed=embed, ephemeral=True)
 
-    @commands.hybrid_command(name="version", with_app_command=True, description="Get informations of the bot")
+    @commands.hybrid_command(name="version", with_app_command=True, description=help_commands['version']['description'])
     async def version(self, ctx: commands.Context):
         try:
             with open(self.bot.path + "changelog.txt", 'r') as file:

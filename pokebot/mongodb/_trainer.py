@@ -3,7 +3,7 @@ from datetime import date
 
 
 def get_trainer_info(self: MongoCon, trainer_id: str) -> dict:
-    return self.pokebot.trainers.find_one({'trainer_id': trainer_id})
+    return self.pokebot.trainers.find_one({'trainer_id': trainer_id}, {'inventory': 0, 'pokemon_team': 0})
 
 
 def is_trainer_exist(self: MongoCon, id: str) -> bool:

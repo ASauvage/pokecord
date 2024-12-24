@@ -4,6 +4,7 @@ import discord
 import logging
 from discord.ext import commands
 from datetime import date
+from .common import TrainerNotFound
 
 
 MAJOR_VERSION = 1
@@ -53,27 +54,28 @@ class PokeBot(commands.Bot):
             if filename.endswith(".py"):
                 await self.load_extension(f"cogs.{filename[:-3]}")
 
-    async def on_command_error(self, ctx, error):
+    async def on_command_error(self, ctx: commands.Context, error):
         if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.channel.send(f"Error: Missing Required Argument // {error}")
-            await ctx.message.delete()
+            await ctx.reply(f"Error: Missing Required Argument // {error}", ephemeral=True)
             logging.info(f"Error: MissingRequiredArgument // {error}")
         elif isinstance(error, commands.BadArgument):
-            await ctx.channel.send(f"Error: Bad Argument // {error}")
-            await ctx.message.delete()
+            await ctx.reply(f"Error: Bad Argument // {error}", ephemeral=True)
             logging.info(f"Error: Bad Argument // {error}")
         elif isinstance(error, commands.MissingPermissions):
-            await ctx.channel.send(f"Error: Missing Permissions// {error}")
-            await ctx.message.delete()
+            await ctx.reply(f"Error: Missing Permissions// {error}", ephemeral=True)
             logging.info(f"Error: Missing Permissions // {error}")
         elif isinstance(error, commands.ChannelNotReadable):
-            await ctx.channel.send(f"Error: Channel Not Readable // {error}")
-            await ctx.message.delete()
+            await ctx.reply(f"Error: Channel Not Readable // {error}", ephemeral=True)
             logging.info(f"Error: Channel Not Readable // {error}")
         elif isinstance(error, commands.NoPrivateMessage):
-            await ctx.channel.send(
-                f"Sorry {ctx.author.mention}, but your not allowed to use this command in private message")
+            await ctx.reply(f"Sorry {ctx.author.mention}, but your not allowed to use this command in private message", ephemeral=True)
             logging.info(f"Error : No Private Message // {error}")
+        elif isinstance(error, commands.PrivateMessageOnly):
+            await ctx.reply(f"Sorry {ctx.author.mention}, but your not allowed to use this command in servers", ephemeral=True)
+            logging.info(f"Error : Private Message Only // {error}")
+        elif isinstance(error, TrainerNotFound):
+            await ctx.reply("No trainer found for this ID", ephemeral=True)
+            logging.info(f"Error : No Trainer Found // {error}")
         else:
             logging.info(f"Error: Unknown // {error}")
 

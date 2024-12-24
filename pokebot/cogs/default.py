@@ -3,7 +3,8 @@ import logging
 from discord.ext import commands
 from datetime import date
 from .. import PokeBot
-from ..common import get_commands_list
+from ..mongodb import MongoCon
+from ..common import TrainerNotFound, get_commands_list
 
 
 class Default(commands.Cog):
@@ -19,27 +20,35 @@ class Default(commands.Cog):
     @commands.hybrid_command(name="create_my_card", with_app_command=True, description=help_commands['create_my_card']['description'])
     async def create_my_card(self, ctx: commands.Context):
         # todo features teams like poke go
-        embed = discord.Embed(title=f'{ctx.author.name} joined the {"red"} team!',
-                              description='', color=0x221188)
-        embed.set_thumbnail(url=ctx.author.avatar)
-        embed.set_footer(text=f'Pokémon trainer since {date.today().strftime("%d/%m/%y")}')
+        if not MongoCon().get_trainer_info(trainer_id=ctx.author.id):
+            embed = discord.Embed(title=f'{ctx.author.name} joined the {"red"} team!',
+                                  description='', color=0x221188)
+            embed.set_thumbnail(url=ctx.author.avatar)
+            embed.set_footer(text=f'Pokémon trainer since {date.today().strftime("%d/%m/%y")}')
 
+            MongoCon().create_trainer(trainer_id=ctx.author.id, trainer_team="red")
+        else:
+            embed = discord.Embed(title='You already have an acount',
+                                  description='', color=0x221188)
         await ctx.reply(embed=embed, ephemeral=True)
 
     @commands.hybrid_command(name="card", with_app_command=True, description=help_commands['card']['description'])
     @discord.app_commands.describe(trainer="(optional) The trainer id")
-    async def card(self, ctx: commands.Context, trainer: discord.User):
-        # todo check if account exist
-        embed = discord.Embed(title=trainer.name,
-                              description='', color=0x221188)
+    async def card(self, ctx: commands.Context, trainer: discord.User = None):
+        if not trainer:
+            trainer = ctx.author
+
+        trainer_data = MongoCon().get_trainer_info(trainer_id=trainer.id)
+        if not trainer_data:
+            raise TrainerNotFound(trainer.id)
+
+        embed = discord.Embed(title=f'{trainer.name} - Lvl. {int(trainer_data['trainer_level']/100)}',
+                              description=f'stats:\n - {"\n - ".join(f"{key}: {value}" for key, value in trainer_data["stats"].items())}',
+                              color=0x221188)
         embed.set_thumbnail(url=trainer.avatar)
-        embed.set_footer(text=f'Pokémon trainer since {date.today().strftime("%d/%m/%y")}')
+        embed.set_footer(text=f'Pokémon trainer since {trainer_data['register_since']}')
 
         await ctx.reply(embed=embed, ephemeral=True)
-
-    @commands.hybrid_command(name="bagpack", with_app_command=True, description=help_commands['bagpack']['description'])
-    async def bagpack(self, ctx: commands.Context):
-        pass
 
 
 async def setup(bot: PokeBot):

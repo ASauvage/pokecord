@@ -1,15 +1,15 @@
 import json
-import enum
 import discord
 import logging
 from discord.ext import commands
+from enum import Enum
 from .. import PokeBot, VERSION
 from ..common import get_commands_list
 
 
 class Help(commands.Cog):
     help_commands: dict = get_commands_list()
-    help_commands_enums: enum.Enum = enum.Enum('HELP_COMMANDS_ENUMS', {x: x for x in help_commands})
+    help_commands_enums: Enum = Enum('HELP_COMMANDS_ENUMS', {x: x for x in help_commands})
 
     def __init__(self, bot: PokeBot):
         self.bot = bot

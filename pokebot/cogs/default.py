@@ -2,9 +2,10 @@ import discord
 import logging
 from discord.ext import commands
 from datetime import date
+from enum import Enum
 from .. import PokeBot
 from ..mongodb import MongoCon
-from ..common import TrainerNotFound, get_commands_list
+from ..common import TrainerNotFound, get_commands_list, get_lvl_from_experience
 
 
 class Default(commands.Cog):
@@ -20,13 +21,14 @@ class Default(commands.Cog):
     @commands.hybrid_command(name="create_my_card", with_app_command=True, description=help_commands['create_my_card']['description'])
     async def create_my_card(self, ctx: commands.Context):
         # todo features teams like poke go
+        team = "red"
         if not MongoCon().get_trainer_info(trainer_id=ctx.author.id):
-            embed = discord.Embed(title=f'{ctx.author.name} joined the {"red"} team!',
-                                  description='', color=0x221188)
+            embed = discord.Embed(title=f'{ctx.author.name} joined the {team.capitalize()} team!',
+                                  description='', color=self.bot.settings['gamerules']['teams'][team])
             embed.set_thumbnail(url=ctx.author.avatar)
             embed.set_footer(text=f'Pokémon trainer since {date.today().strftime("%d/%m/%y")}')
 
-            MongoCon().create_trainer(trainer_id=ctx.author.id, trainer_team="red")
+            MongoCon().create_trainer(trainer_id=ctx.author.id, trainer_team=team)
         else:
             embed = discord.Embed(title='You already have an acount',
                                   description='', color=0x221188)
@@ -42,9 +44,9 @@ class Default(commands.Cog):
         if not trainer_data:
             raise TrainerNotFound(trainer.id)
 
-        embed = discord.Embed(title=f'{trainer.name} - Lvl. {int(trainer_data['trainer_level']/100)}',
+        embed = discord.Embed(title=f'{trainer.name} - Lvl. {get_lvl_from_experience(trainer_data["trainer_lvl"])}',
                               description=f'stats:\n - {"\n - ".join(f"{key}: {value}" for key, value in trainer_data["stats"].items())}',
-                              color=0x221188)
+                              color=self.bot.settings['gamerules']['teams'][trainer_data['trainer_team']])
         embed.set_thumbnail(url=trainer.avatar)
         embed.set_footer(text=f'Pokémon trainer since {trainer_data['register_since']}')
 

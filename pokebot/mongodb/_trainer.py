@@ -13,7 +13,11 @@ class _Trainer:
             trainer_id=trainer_id,
             register_since=date.today().isoformat(),
             trainer_team=trainer_team,
-            trainer_level=0,
+            trainer_lvl=dict(
+                lvl=1,
+                exp=0,
+                required=50
+            ),
             stats=dict(
                 battle_won=0,
                 pokemon_caught=0

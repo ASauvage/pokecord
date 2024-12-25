@@ -5,7 +5,7 @@ from datetime import date
 from enum import Enum
 from .. import PokeBot
 from ..mongodb import MongoCon
-from ..common import TrainerNotFound, get_commands_list, get_lvl_from_experience
+from ..common import TrainerNotFound, get_commands_list
 
 
 class Default(commands.Cog):
@@ -22,7 +22,7 @@ class Default(commands.Cog):
     async def create_my_card(self, ctx: commands.Context):
         # todo features teams like poke go
         team = "red"
-        if not MongoCon().get_trainer_info(trainer_id=ctx.author.id):
+        if not MongoCon().is_trainer_exist(trainer_id=ctx.author.id):
             embed = discord.Embed(title=f'{ctx.author.name} joined the {team.capitalize()} team!',
                                   description='', color=self.bot.settings['gamerules']['teams'][team])
             embed.set_thumbnail(url=ctx.author.avatar)
@@ -44,7 +44,7 @@ class Default(commands.Cog):
         if not trainer_data:
             raise TrainerNotFound(trainer.id)
 
-        embed = discord.Embed(title=f'{trainer.name} - Lvl. {get_lvl_from_experience(trainer_data["trainer_lvl"])}',
+        embed = discord.Embed(title=f'{trainer.name} - Lvl. {trainer_data["trainer_lvl"]['lvl']}',
                               description=f'stats:\n - {"\n - ".join(f"{key}: {value}" for key, value in trainer_data["stats"].items())}',
                               color=self.bot.settings['gamerules']['teams'][trainer_data['trainer_team']])
         embed.set_thumbnail(url=trainer.avatar)

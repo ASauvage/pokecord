@@ -10,7 +10,3 @@ class TrainerNotFound(Exception):
 def get_commands_list():
     with open(os.path.dirname(__file__) + '/commands.json', 'r') as json_file:
         return json.load(json_file)
-
-
-def get_lvl_from_experience(experience: int) -> int:
-    return int(experience/(100*(1+experience/10000)))

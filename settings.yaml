@@ -1,0 +1,14 @@
+discord:
+    token: ""
+    application_id: ""
+    prefix: ">"
+gamerules:
+    activate_battles_feature: yes
+    encounter_delay: 10800
+    max_encounter_stack: 3
+    max_team_pokemon: 6
+    shiny_encounter_rate: 0.0002
+    teams:
+        - red: 0xFF0000
+        - yellow: 0x00FFFF
+        - blue: 0x0000FF

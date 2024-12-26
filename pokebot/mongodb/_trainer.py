@@ -22,15 +22,15 @@ class _Trainer:
                 battle_won=0,
                 pokemon_caught=0
             ),
-            inventory=dict(
-                pokeball=0,
-                superball=0,
-                hyperball=0,
-                masterball=0,
-                potion=0,
-                super_potion=0,
-                hyper_potion=0,
-                max_potion=0
-            ),
+            inventory={
+                'poke-ball': 0,
+                'great-ball': 0,
+                'ultra-ball': 0,
+                'master-ball': 0,
+                'potion': 0,
+                'super-potion': 0,
+                'hyper-potion': 0,
+                'max-potion': 0
+            },
             pokemon_team=list()
         ))

@@ -12,4 +12,5 @@ __pycache__/
 
 # Your gitignore begin here
 #
+logs/
 settings.yaml

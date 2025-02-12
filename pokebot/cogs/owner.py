@@ -10,7 +10,7 @@ class Owner(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        logging.info(f'cogs/{__name__} loaded')
+        logging.info(f'{__name__} loaded')
 
     @commands.hybrid_command(name="sync", with_app_command=False, description="Sync commands with discord (Owner only)")
     @commands.has_permissions(administrator=True)

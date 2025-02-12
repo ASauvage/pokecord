@@ -8,7 +8,7 @@
     "card": {
         "description": "Inspect trainers card",
         "parameters": [
-            "id: (optional) The trainer's ID"
+            "trainer: (optional) The trainer's ID"
         ],
         "guild_only": true,
         "extras": "default ID is yours"

@@ -2,21 +2,20 @@ import discord
 import logging
 from discord.ext import commands
 from datetime import date
-from enum import Enum
 from .. import PokeBot
 from ..mongodb import MongoCon
 from ..common import TrainerNotFound, get_commands_list
 
 
 class Default(commands.Cog):
-    help_commands: dict = get_commands_list(__name__)
+    help_commands: dict = get_commands_list(__name__.split('.')[-1])
 
     def __init__(self, bot: PokeBot):
         self.bot = bot
 
     @commands.Cog.listener()
     async def on_ready(self):
-        logging.info(f'cogs/{__name__} loaded')
+        logging.info(f'{__name__} loaded')
 
     @commands.hybrid_command(name="create_my_card", with_app_command=True, description=help_commands['create_my_card']['description'])
     async def create_my_card(self, ctx: commands.Context):

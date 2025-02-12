@@ -14,10 +14,10 @@ VERSION = '.'.join((str(MAJOR_VERSION), str(MINOR_VERSION), str(PATCH_VERSION)))
 
 
 class PokeBot(commands.Bot):
-    def __init__(self):
+    def __init__(self, log_level: int = 20):
         # Variable
         self.path = os.path.dirname(__file__) + "/"
-        with open(self.path + 'settings.yaml', 'r') as yaml_file:
+        with open('settings.yaml', 'r') as yaml_file:
             self.settings = yaml.load(yaml_file, Loader=yaml.FullLoader)
         self.developper = None
 
@@ -29,9 +29,9 @@ class PokeBot(commands.Bot):
         intents.reactions = True
 
         # Logging
-        os.makedirs(self.path + 'logs', exist_ok=True)
+        os.makedirs('logs', exist_ok=True)
         logging.basicConfig(filename=f"./logs/{date.today()}.log",
-                            level=logging.INFO,
+                            level=log_level,
                             format="%(asctime)s [%(levelname)s] %(message)s")
 
         super().__init__(command_prefix=self.settings['discord']['prefix'],
@@ -41,8 +41,8 @@ class PokeBot(commands.Bot):
                          tree_cls=discord.app_commands.CommandTree)
 
     async def on_ready(self):
-        logging.info(f'[{__name__}] Logged in as {self.user}')
-        print(f'[{__name__}]logged in as {self.user}')
+        logging.info(f'Logged in as {self.user}')
+        print(f'Logged in as {self.user}')
 
         self.developper = await self.fetch_user(187529417176645632)
 

@@ -7,14 +7,14 @@ from ..common import TrainerNotFound, get_commands_list
 
 
 class Trainer(commands.Cog):
-    help_commands: dict = get_commands_list(__name__)
+    help_commands: dict = get_commands_list(__name__.split('.')[-1])
 
     def __init__(self, bot: PokeBot):
         self.bot = bot
 
     @commands.Cog.listener()
     async def on_ready(self):
-        logging.info(f'cogs/{__name__} loaded')
+        logging.info(f'{__name__} loaded')
 
     @commands.hybrid_command(name="bagpack", with_app_command=True, description=help_commands['bagpack']['description'])
     async def bagpack(self, ctx: commands.Context):
@@ -34,4 +34,7 @@ class Trainer(commands.Cog):
 # - team
 # - pc
 # - inventory
+
+async def setup(bot: PokeBot):
+    await bot.add_cog(Trainer(bot))
 

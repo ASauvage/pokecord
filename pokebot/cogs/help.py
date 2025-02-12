@@ -14,12 +14,9 @@ class Help(commands.Cog):
     def __init__(self, bot: PokeBot):
         self.bot = bot
 
-        with open(self.bot.path + "commands.json", 'r') as file:
-            self.help = json.load(file)
-
     @commands.Cog.listener()
     async def on_ready(self):
-        logging.info(f'cogs/{__name__} loaded')
+        logging.info(f'{__name__} loaded')
 
     @commands.hybrid_command(name="help", with_app_command=True, description=help_commands['help']['description'])
     @discord.app_commands.describe(**dict(param.split(': ') for param in help_commands['help']['parameters']))

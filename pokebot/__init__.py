@@ -79,8 +79,8 @@ class PokeBot(commands.Bot):
         else:
             logging.info(f"Error: Unknown // {error}")
 
-    def startbot(self, token: str = None):
+    async def startbot(self, token: str = None):
         if not token:
             token = self.settings['discord']['token']
 
-        self.start(token)
+        await self.start(token)

@@ -1,0 +1,8 @@
+{
+    "bagpack": {
+        "description": "Show what's inside your bag",
+        "parameters": [],
+        "guild_only": true,
+        "extra": null
+    }
+}

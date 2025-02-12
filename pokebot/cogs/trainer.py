@@ -7,7 +7,7 @@ from ..common import TrainerNotFound, get_commands_list
 
 
 class Trainer(commands.Cog):
-    help_commands: dict = get_commands_list()
+    help_commands: dict = get_commands_list(__name__)
 
     def __init__(self, bot: PokeBot):
         self.bot = bot

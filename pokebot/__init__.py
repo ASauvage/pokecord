@@ -50,9 +50,9 @@ class PokeBot(commands.Bot):
 
     async def setup_hook(self):
         logging.info("Loading cogs...")
-        for filename in os.listdir(os.path.dirname(__file__) + "/cogs"):
+        for filename in os.listdir(self.path + "cogs"):
             if filename.endswith(".py"):
-                await self.load_extension(f"cogs.{filename[:-3]}")
+                await self.load_extension(f".cogs.{filename[:-3]}", package=__package__)
 
     async def on_command_error(self, ctx: commands.Context, error):
         if isinstance(error, commands.MissingRequiredArgument):

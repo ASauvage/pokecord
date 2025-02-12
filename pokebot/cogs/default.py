@@ -9,7 +9,7 @@ from ..common import TrainerNotFound, get_commands_list
 
 
 class Default(commands.Cog):
-    help_commands: dict = get_commands_list()
+    help_commands: dict = get_commands_list(__name__)
 
     def __init__(self, bot: PokeBot):
         self.bot = bot
@@ -35,7 +35,7 @@ class Default(commands.Cog):
         await ctx.reply(embed=embed, ephemeral=True)
 
     @commands.hybrid_command(name="card", with_app_command=True, description=help_commands['card']['description'])
-    @discord.app_commands.describe(trainer="(optional) The trainer id")
+    @discord.app_commands.describe(**dict(param.split(': ') for param in help_commands['card']['parameters']))
     async def card(self, ctx: commands.Context, trainer: discord.User = None):
         if not trainer:
             trainer = ctx.author

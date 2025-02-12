@@ -1,0 +1,16 @@
+{
+    "create_my_card": {
+        "description": "Create your trainer card and start playing",
+        "parameters": [],
+        "guild_only": true,
+        "extra": null
+    },
+    "card": {
+        "description": "Inspect trainers card",
+        "parameters": [
+            "id: (optional) The trainer's ID"
+        ],
+        "guild_only": true,
+        "extras": "default ID is yours"
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "help": {
+        "description": "A help command for commands",
+        "parameters": [
+            "command: (optional) The command name"
+        ],
+        "guild_only": false,
+        "extras": null
+    },
+    "version": {
+        "description": "Get informations of the bot",
+        "parameters": [],
+        "guild_only": false,
+        "extras": null
+    }
+}

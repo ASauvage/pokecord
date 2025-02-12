@@ -12,7 +12,7 @@ class Owner(commands.Cog):
     async def on_ready(self):
         logging.info(f'cogs/{__name__} loaded')
 
-    @commands.hybrid_command(name="sync", with_app_command=True, description="Sync commands with discord (Owner only)")
+    @commands.hybrid_command(name="sync", with_app_command=False, description="Sync commands with discord (Owner only)")
     @commands.has_permissions(administrator=True)
     async def sync(self, ctx: commands.Context):
         if await self.bot.is_owner(ctx.author):
